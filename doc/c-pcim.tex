@@ -1,0 +1,365 @@
+\documentclass[12pt]{article}
+
+\usepackage[top=1.00in, bottom=1.25in, left=0.75in, right=0.75in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[round]{natbib}
+\usepackage{url}
+\usepackage{breakurl}
+\usepackage[breaklinks]{hyperref}
+\def\UrlBreaks{\do\/\do-}
+
+\theoremstyle{plain}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{corollary}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem*{convention}{Convention}
+
+\theoremstyle{remark}
+\newtheorem*{notation}{Notation}
+\newtheorem*{note}{Note}
+\newtheorem*{claim}{Claim}
+
+\newcommand{\suchthat}{\mid}
+\newcommand{\given}{\mid}
+
+
+\begin{document}
+
+\begin{definition}
+  Discrete data is counted while continuous data is measured
+  \citep{matisfundis18}.
+\end{definition}
+
+\begin{definition}
+  A \textbf{combination} is an arrangement of items without regard to the order.
+  A \textbf{permutation} is an arrangement of items in a specific order.
+  \citep{matisfuncom18}.
+\end{definition}
+
+\begin{definition}
+  An \textbf{experiment} is a procedure that yields one of a given set of
+  possible outcomes \citep{ros02}.
+\end{definition}
+
+\begin{definition}
+  The \textbf{sample space} of the experiment is the set of possible outcomes
+  \citep{ros02}.
+\end{definition}
+
+\begin{definition}
+  An \textbf{event} is a subset of the sample space \citep{ros02}.
+\end{definition}
+
+\begin{definition}
+  \textbf{Probability} is the measure of the likelihood that an event will
+  occur.
+  Probability is quantified as a number between 0 and 1, where 0 indicates
+  impossibility and 1 certainty.
+\end{definition}
+
+\begin{definition}
+  \textbf{Finite probability}. If $S$ is a finite nonempty sample space of
+  equally likely outcomes, and $E$ is an event, that is, a subset of $S$,
+  then the probability of $E$ is $p(E)=\frac{|E|}{|S|}$ \citep{ros02}.
+\end{definition}
+
+\begin{definition}
+  A \textbf{random variable}\footnotemark\ is a function from the sample space
+  of an experiment to the set of real numbers.
+  \begin{equation*}
+    X:S \to \mathbb{R}
+  \end{equation*}
+  A random variable $X(t)$ maps each outcome $t$ to a real number \citep{ros02}.
+  \footnotetext{
+    Random variables translate outcomes in the sample space of an experiment to
+    real numbers so that we can reason about them with mathematics.}
+\end{definition}
+
+\begin{note}
+  It is worth clarifying that ``random variable'' is a misnomer.
+  A random variable is a function.
+  It is not a variable, and it is not random!
+  It is a representation of an underlying random system.
+  The name \textit{random variable} (the translation of
+  \textit{variabile casuale}) was introduced by the Italian mathematician
+  F. P. Cantelli in 1916 \citep{ros02}.
+\end{note}
+
+\section{Probability Distributions}
+
+\begin{definition}
+  The \textbf{distribution} of a random variable $X$ on a sample space $S$
+  is the set of pairs $(r,p(X=r))$ for all $r \in X(S)$, where $p(X=r)$ is the
+  probability that $X$ takes the value $r$.
+  The set of pairs in this distribution is determined by the probabilities
+  $p(X=r)$ for $r \in X(S)$ \citep{ros02}.
+\end{definition}
+
+\subsection{Bernoulli Distribution}
+
+\begin{definition}
+  Discrete probability distribution of a random variable which takes the value
+  $1$ with probability $p$ and the value $0$ with probability $q=1-p$.
+\end{definition}
+
+The random variable:
+\begin{equation*}
+  X = \text{The outcome of the experiment is ``success''.}
+\end{equation*}
+
+Probability mass function over possible outcomes $k$:
+\begin{equation*}\label{bernoulli}
+  f(k;p) = \mathrm{Pr}(k;p) = \mathrm{Pr}(X=k) = p^k(1 - p)^{1-k}
+  \quad \text{for}\ k \in \{0,1\}
+\end{equation*}
+
+\subsection{Binomial Distribution}
+
+\begin{definition}
+  Discrete probability distribution of the number of successes in a sequence of
+  $n$ independent Bernoulli experiments.
+  For a single trial, that is, $n=1$, the binomial distribution is a Bernoulli
+  distribution.
+\end{definition}
+
+\begin{note}
+  The binomial distribution is frequently used to model the number of successes
+  in a sample of size $n$ drawn with replacement from a population of size
+  $N$.
+  If the sampling is carried out without replacement, the draws are not
+  independent and so the resulting distribution is a \textbf{hypergeometric}
+  distribution, not a binomial one. However, for $N$ much larger than $n$, the
+  binomial distribution remains a good approximation, and is widely used.
+\end{note}
+
+The random variable:
+\begin{equation*}
+  X = \text{The number of successes in a sequence of $n$ independent Bernoulli
+            experiments is $k$.}
+\end{equation*}
+
+Probability mass function of getting exactly $k$ successes in $n$ trials:
+\begin{equation*}%\label{binomial}
+  f(k;n,p) = \mathrm{Pr}(k;n,p) = \mathrm{Pr}(X=k) = \binom{n}{k}p^k(1-p)^{n-k}
+  \quad \text{for}\ k \in \{0,1,\dots,n\}
+\end{equation*}
+
+\begin{definition}
+  The binomial coefficient, $\binom{n}{k} = \frac{n!}{k!(n-k)!}$, is the
+  coefficient of the $x^k$ term in the polynomial expansion of the binomial
+  power
+  $(1+x)^n = \binom{n}{0}x^0 + \binom{n}{1}x^1 + \cdots + \binom{n}{n}x^n$,
+  that is, the \textbf{binomial theorem}.
+\end{definition}
+
+\paragraph{Explanation}
+$k$ successes occur with probability $p^k$ and $n-k$ failures occur with
+probability $(1-p)^{n-k}$.
+The $k$ successes can occur anywhere among the $n$ trials, and there are
+$\binom{n}{k}$ different ways of distributing $k$ successes in a sequence of
+$n$ trials.
+
+\subsection{Poisson Distribution}
+
+\begin{definition}
+  Discrete probability distribution of a given number of events occurring in a
+  fixed space interval, usually time, and these events occur with a known
+  constant rate and independently of the time since the last event.
+  The Poisson distribution is derived from the \textbf{binomial distribution}
+  by splitting up the interval into $n$ subintervals, each of which is so small
+  that at most one event could occur in it with non-zero probability
+  \citep{wacmensch08}.
+\end{definition}
+
+The random variable:
+\begin{equation*}
+  X = \text{The number of events in an interval is $k$.}
+\end{equation*}
+
+Probability mass function\footnotemark\ of getting exactly $k$ events in an
+interval:
+\footnotetext{
+  Notice that the interval length is not specified.
+  Refer to \citet{wacmensch08} for the derivation.
+  }
+\begin{equation*}
+  f(k;\lambda) = \mathrm{Pr}(k;\lambda) = \mathrm{Pr}(X=k) =
+  e^{-\lambda}\frac{\lambda^k}{k!}
+\end{equation*}
+
+where $\lambda$ is the event rate, the average number of events in an interval.
+
+\subsection{Stochastic (Random) Process}
+
+\begin{definition}
+  A \textbf{stochastic process} is a random phenomenon that arises through a
+  process which is developing in time in a manner controlled by probabilistic
+  laws \citep{par99}.
+  From a point of view of the mathematical theory of probability a stochastic
+  process is best defined as a collection of random variables, indexed by points
+  in some space.
+  \begin{equation*}
+    \{X(t), t \in T\}
+  \end{equation*}
+  A more appropriate name in mathematics is \textbf{random field}.
+  The set used to index the random variables is called the \textbf{index set}.
+  Historically, the index set was some subset of the real line, such as the
+  natural numbers, giving the index set the interpretation of time.
+  Each random variable in the collection takes values from the same mathematical
+  space known as the \textbf{state space}.
+  An \textbf{increment} is the amount that a stochastic process changes between
+  two index values, often interpreted as two points in time.
+\end{definition}
+
+\begin{note}
+  Even though the index set can be any set in any space, generally more results
+  and theorems are possible  for stochastic processes when the index set is
+  ordered.
+  Most commonly, random variables in a stochastic process are indexed by the
+  positive numbers along the real number line, interpreted as time.
+  Among these, the \textbf{Brownian motion process} and
+  the \textbf{Poisson process} are considered the most important and central in
+  the theory of stochastic processes.
+  Other stochastic processes include \textbf{random walk} and
+  \textbf{Markov Chain} and \textbf{martingales}.
+  A martingale models a fair game.
+  A simple random walk is a Markov chain and also a martingale.
+\end{note}
+
+\subsection{Point Process}
+
+\begin{definition}
+  A point process (or \textbf{point field}) is a collection of mathematical
+  points randomly located on some underlying mathematical space.
+  Point processes on the real line form an important special case that is
+  particularly amenable to study because the points are ordered in a natural
+  way, and the whole point process can be described completely by the (random)
+  intervals between the points.
+\end{definition}
+
+\begin{note}
+  Different from stochastic processes, point processes are defined as a
+  collection points randomly located on some space and not as a collection of
+  random variables indexed by some index space.
+  Various interpretations of a point process exist:
+  \begin{itemize}
+  \item a random object that arises from or is associated with a stochastic
+    process
+  \item a stochastic process indexed by sets of the underlying space on which it
+    is defined
+  \end{itemize}
+\end{note}
+
+\pagebreak
+
+\subsection{Renewal Process}
+
+\begin{definition}
+  Historically the first point processes that were studied had the real half
+  line $\mathbb{R}_+ = [0,\infty)$ as their state space, which in this context
+  is usually interpreted as time.
+  These studies were motivated by the wish to model telecommunication systems,
+  in which the points represented events in time, such as calls to a telephone
+  exchange.
+  Point processes on $\mathbb{R}_+$ are typically described by giving the
+  sequence of their (random) inter-event times $(T1,T2,\dots)$, from which the
+  actual sequence $(X1,X2,\dots)$ of event times can be obtained as
+  \begin{equation*}
+    X_k = \sum_{j=1}^{k} T_j\quad \text{for}\ k \geq 1.
+  \end{equation*}
+  If inter-event times are independent and identically distributed, the point
+  process is called a \textbf{renewal process}.
+\end{definition}
+
+\begin{note}
+  The \textbf{intensity} $\lambda(t|H_t)$ of a point process on the real
+  half-line with respect to a filtration $H_t$ is defined as
+  \begin{equation*}
+    \lambda(t|H_t) = \lim_{\Delta t \to 0} \frac{1}{\Delta t} \mathrm{Pr}
+    (\text{One event occurs in time interval} [t, t+\Delta t] | H_t)
+  \end{equation*}
+  $H_t$ can denote the history of event-point times preceding time $t$ but can
+  also correspond to other \emph{filtrations} (for example in the case of a Cox
+  process).
+  The \emph{compensator} of a point process, also known as the dual-predictable
+  projection, is the integrated conditional intensity function defined by
+  \begin{equation*}
+    \Lambda(s,u) = \int_s^u \lambda(t|H_t)\mathrm{d}t
+  \end{equation*}
+\end{note}
+
+% \footnote is a fragile command and section (or subsection) title are moving
+% arguments (meaning they get written to an auxiliary file to be used in the
+% table of contents). Fragile commands break in moving arguments and the
+% standard solution is to protect them with \protect. However, this will produce
+% a footnote in the table of contents. In order to avoid this, use the optional
+% argument of \section for the TOC or even better, do not use footnotes in
+% headings.
+% https://tex.stackexchange.com/questions/153329/footnote-in-sub-section-title
+\subsection[Poisson Process]{Poisson (Point)\footnotemark\ Process}
+
+\footnotetext{
+  The word point is often omitted, but there are other Poisson processes of
+  objects, which, instead of points, consist of more complicated mathematical
+  objects such as lines and polygons, and such processes can be based on the
+  Poisson point process.
+}
+
+\begin{definition}
+  The number of points in a region of finite size within a Poisson process is
+  a random variable with a \textbf{Poisson distribution}.
+  The Poisson point process is often defined on the real line, where it can be
+  considered as a \textbf{stochastic process}.
+  The Poisson process is a point process with convenient mathematical
+  properties.
+  The Poisson point process has the property that each point is stochastically
+  independent to all the other points in the process.
+  The Poisson process has been used to build other point processes where the
+  points are not independent of each other.
+\end{definition}
+
+\begin{note}
+
+  \textbf{Poisson Counting Process}
+
+\begin{definition}
+  A homogeneous Poisson point process on the positive half-line that represents
+  the total number of occurrences or events that have happened up to and
+  including time $t$.
+  \begin{equation*}
+    \{ N(t), t \geq 0 \}
+  \end{equation*}
+  The probability of random variable $N(t)$ being equal to $n$:
+  \begin{equation*}
+    P\{N(t)=n\} = e^{\lambda t} \frac{(\lambda t)^n}{n!}
+  \end{equation*}
+\end{definition}
+
+\end{note}
+
+\section{PCIM}
+
+\begin{definition}
+  Model for learning nonlinear temporal dependencies in event streams
+  \citep{gunmeexu11}.
+
+\begin{itemize}
+  \item Model: A marked point process
+  \item Learning: Closed-form Bayesian approach
+  \item Sampling: Important sampling using a proposal distribution based on
+    Poisson superimposition
+\end{itemize}
+
+\end{definition}
+
+\bibliography{bibliography}
+\bibliographystyle{plainnat}
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
