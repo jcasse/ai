@@ -60,8 +60,10 @@
 }
 
 @book{wacmensch08,
- author    = {Wackerly, Dennis D. and Mendenhall, William and Scheaffer, Richard L.},
  title     = {Mathematical Statistics with Applications},
+ author    = {Wackerly, Dennis D. and Mendenhall, William and Scheaffer, Richard
+              L.
+             },
  year      = {2008},
  edition   = {7th},
  publisher = {Thomson Learning, Inc.},
@@ -77,12 +79,39 @@
            }
 }
 
+@inproceedings{rajgraher05,
+ title     = {Poisson-Networks: A Model for structured point processes},
+ author    = {Rajaram, Shyamsundar and Graepel, Thore and Herbrich, Ralf},
+ booktitle = {Proceedings of the Tenth International Workshop on Artificial
+              Intelligence and Statistics},
+ year      = {2005},
+ month     = {January},
+ abstract  = {
+           Modelling structured multivariate point process data has wide ranging
+           applications like understanding neural activity, developing faster
+           file access systems and learning dependencies among servers in large
+           networks. In this paper, we develop the Poisson network model for
+           representing multivariate structured Poisson processes. In our model
+           each node of the network represents a Poisson process. The novelty of
+           our work is that waiting times of a process are modelled by an
+           exponential distribution with a piecewise constant rate function that
+           depends on the event counts of its parents in the network in a
+           generalised linear way. Our choice of model allows to perform exact
+           sampling from arbitrary structures. We adopt a Bayesian approach for
+           learning the network structure. Further, we discuss fixed point and
+           sampling based approximations for performing inference of rate
+           functions in Poisson networks.
+           },
+ publisher = {Society for Artificial Intelligence and Statistics},
+ url       = {https://www.microsoft.com/en-us/research/publication/poisson-networks-a-model-for-structured-point-processes/},
+}
+
 @inproceedings{gunmeexu11,
-title      = {A Model for Temporal Dependencies in Event Streams},
-author     = {Gunawardana, Asela and Meek, Christopher and Xu, Puyang and Meek, Chris},
-booktitle  = {Neural Information Processing Systems},
-year       = {2011},
-abstract   = {
+ title     = {A Model for Temporal Dependencies in Event Streams},
+ author    = {Gunawardana, Asela and Meek, Christopher and Xu, Puyang},
+ booktitle = {Neural Information Processing Systems},
+ year      = {2011},
+ abstract  = {
            We introduce the Piecewise-Constant Conditional Intensity Model, a
            model for learning temporal dependencies in event streams.
            We describe a closed-form Bayesian approach to learning these models,
@@ -94,6 +123,6 @@ abstract   = {
            that our importance sampling algorithm can effectively forecast
            future events.
            },
-publisher  = {Neural Information Processing Systems Foundation},
-url        = {https://www.microsoft.com/en-us/research/publication/a-model-for-temporal-dependencies-in-event-streams/}
+ publisher = {Neural Information Processing Systems Foundation},
+ url       = {https://www.microsoft.com/en-us/research/publication/a-model-for-temporal-dependencies-in-event-streams/}
 }

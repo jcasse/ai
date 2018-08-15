@@ -340,11 +340,31 @@ where $\lambda$ is the event rate, the average number of events in an interval.
 
 \end{note}
 
-\section{PCIM}
+\subsection{PCIM}
 
 \begin{definition}
-  Model for learning nonlinear temporal dependencies in event streams
-  \citep{gunmeexu11}.
+  Model for learning nonlinear temporal dependencies in event streams.
+  Events carry both information about their timing and their type.
+  Used to predict users' interests from their web queries and the type of system
+  from supercomputer system error log.
+  The dependencies between events can be due to both their timing and their
+  types.
+
+  The Piecewise-Constant Conditional Intensity Model (PCIM) is a class of marked
+  point processes that can model the types and timing of events.
+  This model captures the dependencies of each type of event on events in the
+  past through a set of piecewise-constant conditional intensity functions.
+  Decision trees represent these dependencies. The decision trees are the
+  picewise-constant conditional intensity functions \citep{gunmeexu11}
+
+  A conjugate prior for this model allows for closed-form computation of the
+  marginal likelihood and parameter posteriors.
+  Model selection then becomes a problem of choosing a decision tree.
+  Decision tree induction can be done efficiently because of the closed form for
+  the marginal likelihood.
+
+  \textbf{Poisson Networks} \citep{rajgraher05} (also piece-wise constant
+  conditional intensity models) are closely related to PCIMs.
 
 \begin{itemize}
   \item Model: A marked point process
