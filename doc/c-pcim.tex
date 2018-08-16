@@ -192,6 +192,31 @@ interval:
 
 where $\lambda$ is the event rate, the average number of events in an interval.
 
+\subsection{Exponential Distribution}
+
+\begin{definition}
+  The exponential distribution (also known as negative exponential distribution)
+  is the probability distribution that describes the time between events in a
+  Poisson point process, i.e., a process in which events occur continuously and
+  independently at a constant average rate.
+  It is a particular case of the gamma distribution.
+  It is the continuous analogue of the geometric distribution, and it has the
+  key property of being memoryless.
+  In addition to being used for the analysis of Poisson point processes it is
+  found in various other contexts.
+\end{definition}
+
+The random variable (continuous):
+\begin{equation*}
+  X = \text{The amount of time that passes before the next event.}
+\end{equation*}
+
+Probability density function:
+\begin{equation*}
+  f(x;\lambda) = \lambda e^{-\lambda x}\quad \text{for}\ x \geq 0
+\end{equation*}
+where $x$ represents time, hence it is defined only for $x \geq 0$.
+
 \subsection{Stochastic (Random) Process}
 
 \begin{definition}
@@ -253,9 +278,7 @@ where $\lambda$ is the event rate, the average number of events in an interval.
   \end{itemize}
 \end{note}
 
-\pagebreak
-
-\subsection{Renewal Process}
+\subsection{Renewal (Point) Process}
 
 \begin{definition}
   Historically the first point processes that were studied had the real half
@@ -340,6 +363,8 @@ where $\lambda$ is the event rate, the average number of events in an interval.
 
 \end{note}
 
+\pagebreak
+
 \subsection{PCIM}
 
 \begin{definition}
@@ -350,8 +375,8 @@ where $\lambda$ is the event rate, the average number of events in an interval.
   The dependencies between events can be due to both their timing and their
   types.
 
-  The Piecewise-Constant Conditional Intensity Model (PCIM) is a class of marked
-  point processes that can model the types and timing of events.
+  The \textbf{Piecewise-Constant Conditional Intensity Model} (PCIM) is a class
+  of marked point processes that can model the types and timing of events.
   This model captures the dependencies of each type of event on events in the
   past through a set of piecewise-constant conditional intensity functions.
   Decision trees represent these dependencies. The decision trees are the
@@ -366,12 +391,36 @@ where $\lambda$ is the event rate, the average number of events in an interval.
   \textbf{Poisson Networks} \citep{rajgraher05} (also piece-wise constant
   conditional intensity models) are closely related to PCIMs.
 
-\begin{itemize}
-  \item Model: A marked point process
-  \item Learning: Closed-form Bayesian approach
-  \item Sampling: Important sampling using a proposal distribution based on
-    Poisson superimposition
-\end{itemize}
+\textbf{Conditional Intensity Model} \citep{did08,dalver09}:
+\begin{equation*}
+  p(x|\theta) = \prod_{l \in \mathcal{L}} \prod_{i=1}^{n}
+  \lambda_l(t_i|h_i,\theta)^{\mathbf{1}_l(l_i)}
+  e^{-\Lambda_l(t_i|h_i;\theta)}
+\end{equation*}
+where
+$\Lambda_l(t|x;\theta) = \int_{-\infty}^t\lambda_l(\tau|x;\theta)\mathrm{d}t$
+for each event sequence $x$ and the indicator function $\mathbf{1}_l(l')$ is one if
+$l'=l$ and zero otherwise.
+The rate parameter changes as a function of time and history and is computed by
+the conditional intensity function $\lambda_l(t_i|h_i,\theta)$.
+
+\begin{note}
+  The \emph{Conditional Intensity Model} is analogous to the likelihood of the
+  sequence of samples from the exponential distribution:
+  Let $X$ be exponential distributed with rate parameter $\lambda$ and
+  $x_1,\dots,x_n$ are $n$ independent samples from $X$.
+  The likelihood function is given by:
+  \begin{equation*}
+    L(\lambda;x) = p(x;\lambda) = \prod_{i=1}^n\lambda e^{-\lambda x_i}
+  \end{equation*}
+  When there is only one label, the conditional intensity model becomes
+  \begin{equation*}
+    p(x|\theta) = \prod_{i=1}^n\lambda(t_i|h_i,\theta)
+    e^{-\Lambda(t_i|h_i;\theta)}
+  \end{equation*}
+  and when the rate parameter is fixed $\lambda(t_i|h_i,\theta) = \lambda$ it
+  becomes $L(\lambda;x)$.
+\end{note}
 
 \end{definition}
 
