@@ -1,8 +1,11 @@
 \documentclass[12pt]{article}
 
 \usepackage[top=1.00in, bottom=1.25in, left=0.75in, right=0.75in]{geometry}
+
 \usepackage{amsmath, amssymb, amsthm}
+
 \usepackage[round]{natbib}
+
 \usepackage{url}
 \usepackage{breakurl}
 \usepackage[breaklinks]{hyperref}
@@ -29,8 +32,8 @@
 \begin{document}
 
 \begin{definition}
-  Discrete data is counted while continuous data is measured
-  \citep{matisfundis18}.
+  Data that is counted is \textbf{discrete} while data that is measured is
+  \textbf{continuous} \citep{matisfundis18}.
 \end{definition}
 
 \begin{definition}
@@ -88,7 +91,7 @@
   F. P. Cantelli in 1916 \citep{ros02}.
 \end{note}
 
-\section{Probability Distributions}
+\section{Discrete Probability Distributions}
 
 \begin{definition}
   The \textbf{distribution} of a random variable $X$ on a sample space $S$
@@ -105,15 +108,21 @@
   $1$ with probability $p$ and the value $0$ with probability $q=1-p$.
 \end{definition}
 
-The random variable:
+\paragraph{Random variable}
 \begin{equation*}
-  X = \text{The outcome of the experiment is ``success''.}
+  X = \text{The outcome of the \textbf{Bernoulli experiment} is ``success''.}
 \end{equation*}
 
-Probability mass function over possible outcomes $k$:
+\paragraph{Probability mass function}
 \begin{equation*}\label{bernoulli}
   f(k;p) = \mathrm{Pr}(k;p) = \mathrm{Pr}(X=k) = p^k(1 - p)^{1-k}
   \quad \text{for}\ k \in \{0,1\}
+\end{equation*}
+
+\paragraph{Parameter}
+\begin{equation*}
+  p = \text{Probability of the outcome of a \textbf{Bernoulli experiment}
+    being a success.}
 \end{equation*}
 
 \subsection{Binomial Distribution}
@@ -135,17 +144,24 @@ Probability mass function over possible outcomes $k$:
   binomial distribution remains a good approximation, and is widely used.
 \end{note}
 
-The random variable:
+\paragraph{Random variable}
 \begin{equation*}
-  X = \text{The number of successes in a sequence of $n$ independent Bernoulli
-            experiments is $k$.}
+  X = \text{The number of successes in a sequence of $n$ independent
+    \textbf{Bernoulli experiments} is $k$.}
 \end{equation*}
 
-Probability mass function of getting exactly $k$ successes in $n$ trials:
-\begin{equation*}%\label{binomial}
+\paragraph{Probability mass function} of getting $k$ successes in $n$ trials.
+\begin{equation*}
   f(k;n,p) = \mathrm{Pr}(k;n,p) = \mathrm{Pr}(X=k) = \binom{n}{k}p^k(1-p)^{n-k}
   \quad \text{for}\ k \in \{0,1,\dots,n\}
 \end{equation*}
+
+\paragraph{Parameters}
+\begin{align*}
+  p & = \text{Probability of the outcome of a \textbf{Bernoulli experiment}
+    being a success.} \\
+  n & = \text{Number of trials (experiemnts).}
+\end{align*}
 
 \begin{definition}
   The binomial coefficient, $\binom{n}{k} = \frac{n!}{k!(n-k)!}$, is the
@@ -174,50 +190,116 @@ $n$ trials.
   \citep{wacmensch08}.
 \end{definition}
 
-The random variable:
+\paragraph{Random variable}
 \begin{equation*}
   X = \text{The number of events in an interval is $k$.}
 \end{equation*}
 
-Probability mass function\footnotemark\ of getting exactly $k$ events in an
-interval:
-\footnotetext{
-  Notice that the interval length is not specified.
-  Refer to \citet{wacmensch08} for the derivation.
-  }
+\paragraph{Probability mass function} of getting $k$ events in an interval.
 \begin{equation*}
   f(k;\lambda) = \mathrm{Pr}(k;\lambda) = \mathrm{Pr}(X=k) =
   e^{-\lambda}\frac{\lambda^k}{k!}
 \end{equation*}
 
-where $\lambda$ is the event rate, the average number of events in an interval.
+\paragraph{Parameter}
+\begin{equation*}
+  \lambda = \text{event rate, the average number of events in an interval.}
+\end{equation*}
+
+\subsection{Geometric Distribution}
+
+\paragraph{Geometric random variable} has two alternate formulations:
+\begin{align*}
+  X_1 & = \text{The number of \textbf{Bernoulli experiments} needed to get the
+        first success.} \\
+  X_2 & = \text{The number of failed \textbf{Bernoulli experiments} before the
+        first success.}
+\end{align*}
+
+\paragraph{Probability mass function} for each corresponding random variable.
+\begin{align*}
+  f_1(k;p) & = \mathrm{Pr}_1(k;p) = \mathrm{Pr}(X_1=k) = (1-p)^{k-1}p
+           \qquad \text{for}\ k=1,2,\dots, 0 \leq p \leq 1 \\
+  f_2(k;p) & = \mathrm{Pr}_2(k;p) = \mathrm{Pr}(X_2=k) = (1-p)^kp
+           \qquad \text{for}\ k=0,1,2,\dots, 0 \leq p < 1
+\end{align*}
+
+\paragraph{Parameter}
+\begin{equation*}
+  p = \text{Probability of the outcome of a Bernoulli experiment being success.}
+\end{equation*}
+
+\paragraph{Example}
+
+Probability that the first coin flip turns up heads:
+\begin{equation*}
+  p(X_1=1) = (1-p)^{1-1}p = (1-p)^0p = p(X_2=0)
+\end{equation*}
+
+\section{Continuous Probability Distributions}
 
 \subsection{Exponential Distribution}
 
 \begin{definition}
   The exponential distribution (also known as negative exponential distribution)
   is the probability distribution that describes the time between events in a
-  Poisson point process, i.e., a process in which events occur continuously and
-  independently at a constant average rate.
+  \textbf{Poisson point process}, i.e., a process in which events occur
+  continuously and independently at a constant average rate.
   It is a particular case of the gamma distribution.
-  It is the continuous analogue of the geometric distribution, and it has the
-  key property of being memoryless.
+  It is the continuous analogue of the \textbf{geometric distribution}, and it
+  has the key property of being memoryless.
   In addition to being used for the analysis of Poisson point processes it is
   found in various other contexts.
 \end{definition}
 
-The random variable (continuous):
+\paragraph{Exponential random variable}
 \begin{equation*}
   X = \text{The amount of time that passes before the next event.}
 \end{equation*}
 
-Probability density function:
+\paragraph{Probability density function}
 \begin{equation*}
   f(x;\lambda) = \lambda e^{-\lambda x}\quad \text{for}\ x \geq 0
 \end{equation*}
-where $x$ represents time, hence it is defined only for $x \geq 0$.
 
-\subsection{Stochastic (Random) Process}
+\paragraph{Parameter}
+\begin{equation*}
+  \lambda = \text{event rate, the average number of events in an interval.}
+\end{equation*}
+
+\paragraph{Derivation} from the \textbf{geometric distribution}.
+\begin{enumerate}
+\item Split up each interval into $n$ sub-intervals such that the probability
+  of an event occurring in a certain sub-interval is $p = \frac{\lambda}{n}$
+\item For a \textbf{geometric random variable}
+  $Y = \text{The number of trials needed to get the first success}$,
+  $p(X \leq b) \approx P(Y \leq b \cdot n)$
+\begin{align*}
+  P(Y \leq b \cdot n) & = \sum_{k=1}^{b \cdot n}P(Y=k) \\
+                      & = \sum_{k=1}^{b \cdot n}(1-p)^{k-1}p =
+                        \sum_{k=1}^{b \cdot n}\left(1-\frac{\lambda}{n}\right)^{k-1}
+                        \cdot \frac{\lambda}{n} \\
+                      & = \frac{\lambda}{n} \cdot \sum_{k=1}^{b \cdot n}
+                        \left(1-\frac{\lambda}{n}\right)^{k-1} \\
+                      & = \frac{\lambda}{n} \cdot \sum_{k=0}^{b \cdot n - 1}
+                        \left(1-\frac{\lambda}{n}\right)^{k} \\
+  \sum_{k=0}^{m}a^k = \frac{1-a^{m+1}}{1-a}\quad
+  \text{finite geometric sum} \\
+  m = b \cdot n - 1 \text{and}\ a = 1 - \frac{\lambda}{n}
+\end{align*}
+\begin{align*}
+  P(Y \leq b \cdot n) & =
+                        \frac{\lambda}{n} \cdot
+                        \frac{1-\left(1-\frac{\lambda}{n}\right)^{b \cdot n}}{1-\left(1-\frac{\lambda}{n}\right)} \\
+  & = 1 - \left(1-\frac{\lambda}{n}\right)^{b \cdot n} \\
+  & = 1 - \left(\left(1-\frac{\lambda}{n}\right)^n\right)^b
+\end{align*}
+
+\end{enumerate}
+\cite{yue18} present an alternate derivation from a \textbf{Markov process}
+representation of the exponential distribution.
+
+\section{Stochastic (Random) Process}
 
 \begin{definition}
   A \textbf{stochastic process} is a random phenomenon that arises through a
@@ -254,7 +336,7 @@ where $x$ represents time, hence it is defined only for $x \geq 0$.
   A simple random walk is a Markov chain and also a martingale.
 \end{note}
 
-\subsection{Point Process}
+\section{Point Process}
 
 \begin{definition}
   A point process (or \textbf{point field}) is a collection of mathematical
