@@ -243,14 +243,14 @@ Probability that the first coin flip turns up heads:
 \begin{definition}
   The exponential distribution (also known as negative exponential distribution)
   is the probability distribution that describes the time between events in a
-  \textbf{Poisson point process}, i.e., a process in which events occur
-  continuously and independently at a constant average rate.
-  It is a particular case of the gamma distribution.
+  \textbf{Poisson point process}.
+\end{definition}
+\begin{note}
   It is the continuous analogue of the \textbf{geometric distribution}, and it
   has the key property of being memoryless.
   In addition to being used for the analysis of Poisson point processes it is
   found in various other contexts.
-\end{definition}
+\end{note}
 
 \paragraph{Exponential random variable}
 \begin{equation*}
@@ -267,7 +267,7 @@ Probability that the first coin flip turns up heads:
   \lambda = \text{event rate, the average number of events in an interval.}
 \end{equation*}
 
-\paragraph{Derivation} from the \textbf{geometric distribution}.
+\paragraph{Derivation} from the \textbf{geometric distribution} \citep{hol18}.
 \begin{enumerate}
 \item Split up each interval into $n$ sub-intervals such that the probability
   of an event occurring in a certain sub-interval is $p = \frac{\lambda}{n}$
@@ -282,7 +282,9 @@ Probability that the first coin flip turns up heads:
                       & = \frac{\lambda}{n} \cdot \sum_{k=1}^{b \cdot n}
                         \left(1-\frac{\lambda}{n}\right)^{k-1} \\
                       & = \frac{\lambda}{n} \cdot \sum_{k=0}^{b \cdot n - 1}
-                        \left(1-\frac{\lambda}{n}\right)^{k} \\
+                        \left(1-\frac{\lambda}{n}\right)^{k}
+\end{align*}
+\begin{align*}
   \sum_{k=0}^{m}a^k = \frac{1-a^{m+1}}{1-a}\quad
   \text{finite geometric sum} \\
   m = b \cdot n - 1 \text{and}\ a = 1 - \frac{\lambda}{n}
@@ -292,7 +294,29 @@ Probability that the first coin flip turns up heads:
                         \frac{\lambda}{n} \cdot
                         \frac{1-\left(1-\frac{\lambda}{n}\right)^{b \cdot n}}{1-\left(1-\frac{\lambda}{n}\right)} \\
   & = 1 - \left(1-\frac{\lambda}{n}\right)^{b \cdot n} \\
-  & = 1 - \left(\left(1-\frac{\lambda}{n}\right)^n\right)^b
+                      & = 1 - \left(\left(1-\frac{\lambda}{n}\right)^n\right)^b
+\end{align*}
+\begin{align*}
+  p(X \leq b) & = \lim_{n \to \infty} P(Y \leq b \cdot n) \\
+              & =
+  \lim_{n \to \infty}\left(1 - \left(\left(1-\frac{\lambda}{n}\right)^n\right)^b\right) \\
+              & = 1 -
+  \left(\lim_{n \to \infty}\left(1-\frac{\lambda}{n}\right)^n\right)^b \\
+              & = 1 - \left(e^{-\lambda}\right)^b \\
+              & = 1 - e^{-\lambda\cdot b}
+\end{align*}
+\begin{align*}
+  p(X \leq b) & = \int_{\infty}^b \mathrm{pdf}(x)\mathrm{d}x \\
+  p(X \leq b) & = \int_0^b \mathrm{pdf}(x)\mathrm{d}x \\
+  \frac{\mathrm{d}}{\mathrm{d}b} P(X \leq b) & = \frac{\mathrm{d}}{\mathrm{d}b}
+                                               \int_o^b\mathrm{pdf}(x)\mathrm{d}x \\
+                                             & = \mathrm{pdf}(b)
+\end{align*}
+\begin{align*}
+\mathrm{pdf}(b) & = \frac{\mathrm{d}}{\mathrm{d}b} P(X \leq b) \\
+                & = \frac{\mathrm{d}}{\mathrm{d}b}
+                  \left(1-e^{-\lambda\cdot b}\right) \\
+  & = \lambda e^{-\lambda b}
 \end{align*}
 
 \end{enumerate}
@@ -306,8 +330,8 @@ representation of the exponential distribution.
   process which is developing in time in a manner controlled by probabilistic
   laws \citep{par99}.
   From a point of view of the mathematical theory of probability a stochastic
-  process is best defined as a collection of random variables, indexed by points
-  in some space.
+  process is best defined as a collection of random variables defined on a
+  common probability space $(\Omega,\mathcal{F}, P)$ and indexed by points in some space.
   \begin{equation*}
     \{X(t), t \in T\}
   \end{equation*}
@@ -339,26 +363,16 @@ representation of the exponential distribution.
 \section{Point Process}
 
 \begin{definition}
-  A point process (or \textbf{point field}) is a collection of mathematical
-  points randomly located on some underlying mathematical space.
+  Point processes are not defined like stochastic processes, but are used to
+  describe data that are localized in space or time.
   Point processes on the real line form an important special case that is
   particularly amenable to study because the points are ordered in a natural
   way, and the whole point process can be described completely by the (random)
-  intervals between the points.
+  intervals between the points or by the event times or by the event counts
+  within each non-overlapping intervals.
+  A \textbf{temporal} point process is a random process whose realization is a
+  collection of points in time.
 \end{definition}
-
-\begin{note}
-  Different from stochastic processes, point processes are defined as a
-  collection points randomly located on some space and not as a collection of
-  random variables indexed by some index space.
-  Various interpretations of a point process exist:
-  \begin{itemize}
-  \item a random object that arises from or is associated with a stochastic
-    process
-  \item a stochastic process indexed by sets of the underlying space on which it
-    is defined
-  \end{itemize}
-\end{note}
 
 \subsection{Renewal (Point) Process}
 
@@ -426,12 +440,8 @@ representation of the exponential distribution.
   points are not independent of each other.
 \end{definition}
 
-\begin{note}
-
-  \textbf{Poisson Counting Process}
-
 \begin{definition}
-  A homogeneous Poisson point process on the positive half-line that represents
+  \textbf{Poisson Counting Process} on the positive half-line that represents
   the total number of occurrences or events that have happened up to and
   including time $t$.
   \begin{equation*}
@@ -443,22 +453,43 @@ representation of the exponential distribution.
   \end{equation*}
 \end{definition}
 
-\end{note}
+\begin{definition}
+  \textbf{Poisson Point Process} on the positive half-line that represents
+  the number of occurrences in the interval $(a,b]$.
+  \begin{equation*}
+    P\{N(a_i,b_i] = n_i,\ i=1,\dots,k\} =
+    \prod_{i=1}^k\frac{[\lambda(b_i-a_i)]^{n_i}}{n!}e^{-\lambda(b_i-a_i)}
+  \end{equation*}
+\end{definition}
 
-\pagebreak
+\begin{definition}
+  \textbf{Poisson Point Process}\footnotemark\ on the positive half-line that
+  represents the inter-event times.
+  \footnotetext{This is the interpretation that we will use when describing PCIM.}
+  \begin{equation*}
+    P\{X_i,\ i=1,\dots,k\} =
+    \prod_{i=1}^k\lambda e^{-\lambda x_i}
+  \end{equation*}
+\end{definition}
+
+\subsection{Marked Point Process}
+
+\begin{definition}
+  Let $\mathcal{X}$ be the space of random variables of an ordinary point
+  process and $\mathcal{L}$ be the space of random variables of labels.
+  A marked point process can be regarded as either a point process in the
+  product space $\mathcal{X} \times \mathcal{L}$, subject to the finiteness
+  constraint of the ground process (that is, the point process of event times),
+  or as an ordinary point process in $\mathcal{X}$ with an associated sequence
+  random variables taking their values in $\mathcal{L}$.
+  A realization of a marked point process is a sequence $\{(x_i,l_i)\}_{i=1}^n$.
+\end{definition}
 
 \subsection{PCIM}
 
-\begin{definition}
-  Model for learning nonlinear temporal dependencies in event streams.
-  Events carry both information about their timing and their type.
-  Used to predict users' interests from their web queries and the type of system
-  from supercomputer system error log.
-  The dependencies between events can be due to both their timing and their
-  types.
-
   The \textbf{Piecewise-Constant Conditional Intensity Model} (PCIM) is a class
-  of marked point processes that can model the types and timing of events.
+  of \textbf{marked point processes} that can model the types and timing of
+  events.
   This model captures the dependencies of each type of event on events in the
   past through a set of piecewise-constant conditional intensity functions.
   Decision trees represent these dependencies. The decision trees are the
@@ -473,7 +504,30 @@ representation of the exponential distribution.
   \textbf{Poisson Networks} \citep{rajgraher05} (also piece-wise constant
   conditional intensity models) are closely related to PCIMs.
 
-\textbf{Conditional Intensity Model} \citep{did08,dalver09}:
+\begin{definition}
+  \textbf{Event stream}
+\begin{equation*}
+  y = \{(t_i,l_i)\}_{i=1}^n
+\end{equation*}
+with $0 < t_1 < \cdots < t_n$, where $t_i \in [0, \infty)$ is the time of the
+$i$th event and $l_i$ is its label, drawn from a finite label set $\mathcal{L}$.
+\end{definition}
+
+\begin{definition}
+  \textbf{History at time $t$} of event sequence $y$ is the sub-sequence
+\begin{equation*}
+  h(t,y) = \{(t_i,l_i)|(t_i,l_i) \in y,t_i \leq t\}
+\end{equation*}
+\begin{itemize}
+  \item $t_0 = 0$
+  \item $h_i = h(t_{i-1},y)$ is the history at time $t_i$
+  \item $t(y) = \mathrm{max}(\{t:(t,l) \in y\})$ is the end time of event
+    sequence $y$ such that $t(h_i) = t_{i-1}$
+\end{itemize}
+\end{definition}
+
+\begin{definition}
+  \textbf{Conditional Intensity Model} \citep{did08,dalver09}:
 \begin{equation*}
   p(x|\theta) = \prod_{l \in \mathcal{L}} \prod_{i=1}^{n}
   \lambda_l(t_i|h_i,\theta)^{\mathbf{1}_l(l_i)}
@@ -481,14 +535,28 @@ representation of the exponential distribution.
 \end{equation*}
 where
 $\Lambda_l(t|x;\theta) = \int_{-\infty}^t\lambda_l(\tau|x;\theta)\mathrm{d}t$
-for each event sequence $x$ and the indicator function $\mathbf{1}_l(l')$ is one if
-$l'=l$ and zero otherwise.
+for each event sequence $x$ and the indicator function $\mathbf{1}_l(l')$ is one
+if $l'=l$ and zero otherwise.
 The rate parameter changes as a function of time and history and is computed by
 the conditional intensity function $\lambda_l(t_i|h_i,\theta)$.
+``The conditional intensities are assumed to satisfy $\lambda_l(t|x;\theta) = 0$
+for $t \leq t(x)$ to ensure that $t_i > t_{i-1}=t(h_i)$.''\footnote{This
+  sentence means that the conditional intensity functions will only evaluate
+  to valid values for times into the future. ``$\lambda_l(t|y)$ is piecewise
+  constant in $t$ for all $t > t(y)$'' \citep{pargunmee12}.}
+\end{definition}
 
 \begin{note}
-  The \emph{Conditional Intensity Model} is analogous to the likelihood of the
-  sequence of samples from the exponential distribution:
+  These models offer a powerful approach for decomposing the dependencies of
+  different event types on the past.
+  In particular, this per-label conditional factorization allows one to model
+  detailed label-specific dependence on past events \citep{gunmeexu11}.
+\end{note}
+
+\begin{note}
+  The \emph{Conditional Intensity Model} is analogous\footnotemark\ to the
+  likelihood of a sequence of samples (\textbf{inter-event times}) from the
+  exponential distribution where the rate parameter changes over time.
   Let $X$ be exponential distributed with rate parameter $\lambda$ and
   $x_1,\dots,x_n$ are $n$ independent samples from $X$.
   The likelihood function is given by:
@@ -504,7 +572,77 @@ the conditional intensity function $\lambda_l(t_i|h_i,\theta)$.
   becomes $L(\lambda;x)$.
 \end{note}
 
+\footnotetext{
+  Despite the similarity to the likelihood of a non-homogeneous Poisson process,
+  this likelihood does not in general define a Poisson process as the
+  conditioning on history can cause the independent increments property of
+  Poisson processes to not hold.
+}
+
+\begin{definition}
+  \textbf{Piecewise-constant Conditional Intensity Models (PCIM)} are
+  a factorization of Conditional Intensity Models where the conditional
+  intensity functions are assumed to be piecewise-constant. This assumption
+  allows efficient learning and inference.
+  \begin{equation*}
+    p(x|S,\Theta) = \prod_{l\in\mathcal{L}}\prod_{s\in\Sigma_l}\lambda_{ls}^{c_{ls}(x)}
+    e^{-\lambda_{ls}d_{ls}(x)}
+  \end{equation*}
+  \begin{itemize}
+    \item $S=\{S_l\}_{l\in\mathcal{L}}$, where $S_l=\left(\Sigma_l,\sigma_l(t,x)\right)$
+      : Set of local structures, one per event type (label $l$)
+    \item $\Sigma_l$ is a set of discrete \textbf{states}
+    \item $s=\sigma_l(t,x)$ is the state given by the
+      \textbf{piecewise-constant state function} (a \textbf{decision tree})
+    \item $\Theta=\{\theta_l\}_{l\in\mathcal{L}}$,
+      where $\theta_l=\{\lambda_{ls}\}_{s\in\Sigma_l}$: Set of local parameters
+    \item $\lambda_l(t|x)=\lambda_{ls}$:
+      The \textbf{piecewise-constant conditional intensity functions}
+    \item $c_{ls}(x)$: The number of times label $l$ occurs in state $s$
+    \item $d_{ls}(x)$: The total time during which $\sigma_l(t|x)$ maps to state $s$
+  \end{itemize}
 \end{definition}
+
+\begin{note}
+  \cite{gunmeexu11} show that given the structure S, a product of Gamma
+  distributions is a conjugate prior for $\Theta$, and that under this prior,
+  the marginal likelihood of the data can be given in closed form.
+  Thus, parameter estimation can be done in closed form given a structure, and
+  imposing a structural prior allows a closed form Bayesian score to be computed
+  for a structure.
+\end{note}
+
+\begin{note}
+  \cite{gunmeexu11} demonstrate their method on two problems. The forecast the
+  user's web search queries and failure events based on system logs on a
+  machine.
+\end{note}
+
+\subsection{C-PCIM}
+
+\begin{definition}
+  \textbf{Conjoint Piecewise-Constant Conditional Intensity Models} generalize
+  PCIMs by allowing the sharing of parameters across event types. This parameter
+  sharing allows to better model event streams of fine-grained events, which
+  are likely to be rare events.
+\end{definition}
+
+\begin{note}
+  In contrast, PCIMs learn dependencies of each event type separately, using
+  independent sub-models for each event type. If some event types are rare,
+  there would not be sufficient data to learn an independent sub-model for
+  such types.
+\end{note}
+
+\begin{note}
+  During structure learning, the C-PCIM learns what event types in what
+  historical contexts can be modeled by shared parameters, thereby allowing more
+  efficient use of data during parameter estimation. In cases where events are
+  structured (encoded via the basis test functions?), with the different event
+  types having known attributes, we show how structure learning can take
+  advantage of these attributes to distinguish between different event types
+  when their dependencies differ, while sharing parameters when they do not.
+\end{note}
 
 \bibliography{bibliography}
 \bibliographystyle{plainnat}
