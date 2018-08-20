@@ -580,7 +580,7 @@ for $t \leq t(x)$ to ensure that $t_i > t_{i-1}=t(h_i)$.''\footnote{This
 }
 
 \begin{definition}
-  \textbf{Piecewise-constant Conditional Intensity Models (PCIM)} are
+  \textbf{Piecewise-Constant Conditional Intensity Models (PCIM)} are
   a factorization of Conditional Intensity Models where the conditional
   intensity functions are assumed to be piecewise-constant. This assumption
   allows efficient learning and inference.
@@ -602,6 +602,15 @@ for $t \leq t(x)$ to ensure that $t_i > t_{i-1}=t(h_i)$.''\footnote{This
     \item $d_{ls}(x)$: The total time during which $\sigma_l(t|x)$ maps to state $s$
   \end{itemize}
 \end{definition}
+
+\begin{note}
+  ``The state $s$ summarizes all the information about $t$ and $y$ necessary for
+  computing $\lambda_l(t|y)$ in that given $s$, $\lambda_l(t|y)$ can be
+  computed without further information about $t$ and $y$.
+  However, unlike in Markov models such as CTBNs, the state does not contain
+  all the information about $t$ and $y$ for predicting future states.''
+  \citep{pargunmee12}
+\end{note}
 
 \begin{note}
   \cite{gunmeexu11} show that given the structure S, a product of Gamma
@@ -643,6 +652,57 @@ for $t \leq t(x)$ to ensure that $t_i > t_{i-1}=t(h_i)$.''\footnote{This
   advantage of these attributes to distinguish between different event types
   when their dependencies differ, while sharing parameters when they do not.
 \end{note}
+
+\begin{definition}
+  \textbf{Conjoint Piecewise-Constant Conditional Intensity Models (C-PCIM)} are
+  PCIMs where the parameters are shared across labels by a single state function
+  $\sigma(l,t,y)$ that now also depends on the label $l$.
+  \begin{equation*}
+    p(x|S,\Theta) = \prod_{s\in\Sigma}\lambda_{s}^{c_{s}(x)}
+    e^{-\lambda_{s}d_{s}(x)}
+  \end{equation*}
+  \begin{itemize}
+    \item $S=\left(\Sigma,\sigma(\cdot,\cdot,\cdot)\right)$: Structure
+    \item $\Sigma$: Set of discrete \textbf{states}
+    \item $s=\sigma(l,t,x)$ is the state given by the
+      \textbf{piecewise-constant state function} (a \textbf{decision tree})
+    \item $\Theta=\{\lambda_s\}_{s\in\Sigma}$: Set of parameters shared across
+      labels $l \in \mathcal{L}$
+    \item $\lambda_l(t|x)=\lambda_{s}$:
+      The \textbf{piecewise-constant conditional intensity functions}
+    \item $c_{s}(x)= \sum_i\mathbf{1}_s(\sigma(l_i,t_i,h_i))$:
+      The number of times label $l$ occurs in $x$ when the state function maps
+      to state $s$ for label $l$
+    \item $d_{s}(x) = \sum_{i}\mathbf{1}_s(\sigma(l_{i-1},t_{i-1},h_{i-1}))(t_i-t_{i-1})$
+      : The total time spent in state $s$
+  \end{itemize}
+\end{definition}
+
+\paragraph{Parameter Learning}
+Using a product of Gamma priors on $\lambda_s$ as conjugate for $\Theta$,
+the point estimate $\hat{\Theta} = \mathbf{E}[\Theta|S,x]$, given a structure
+and the data, is given by
+\begin{equation*}
+  \hat{\lambda}_s = \frac{\alpha + c_s(x)}{\beta + d_s(x)}
+\end{equation*}
+
+\paragraph{Structure Learning}
+Using a factored prior on the structure, $p(S) \propto \kappa^{|\Sigma|}$,
+learn a decision tree \citep{chihecmee97} by selecting the next node on the tree
+to split based on the gain:
+\begin{equation*}
+  \mathrm{Gain}(S \to S') =
+  \frac{\prod_{s'\in\Sigma_f}\kappa\gamma_{s \odot s'}(x)}{\kappa\gamma_s(x)}
+\end{equation*}
+where
+\begin{equation*}
+  \gamma_s(x) =
+  \frac{\beta^{\alpha}}{\Gamma(\alpha)}\frac{\Gamma(\alpha + c_s(x))}{(\beta + d_s(x))^{\alpha + c_s(x)}}
+\end{equation*}
+where
+\begin{equation*}
+  \Gamma(n) = (n-1)!
+\end{equation*}
 
 \bibliography{bibliography}
 \bibliographystyle{plainnat}
