@@ -704,10 +704,13 @@ where
   \gamma_s(x) =
   \frac{\beta^{\alpha}}{\Gamma(\alpha)}\frac{\Gamma(\alpha + c_s(x))}{(\beta + d_s(x))^{\alpha + c_s(x)}}
 \end{equation*}
-where
-\begin{equation*}
-  \Gamma(n) = (n-1)!
-\end{equation*}
+where the gamma function, $\Gamma(\cdot)$, is an extension of the factorial
+function to real and complex numbers
+(it is not defined on the negative integers):
+\begin{align*}
+  \Gamma(n) & = (n-1)!,\ n\in\mathbb{Z}^+ \\
+  \Gamma(z) & = \int_0^{\infty}x^{z-1}e^{-x}\mathrm{d}x
+\end{align*}
 
 \begin{algorithm}[H]
 %\TitleOfAlgo{Structure Learning}
@@ -743,7 +746,7 @@ where
 \Parameters{$\alpha,\beta$}
 \KwOut{$\Theta=\{\lambda_s\}_{s\in\Sigma}$}
 \SetKw{Return}{return}
-\SetKwFor{FOR}{for}{do}{endFor}
+\SetKwFor{FOR}{for}{do}{end}
 \Begin{
   \FOR{$s\in\Sigma$}
   {$\lambda_s=\frac{\alpha+c_s(x)}{\beta+d_s(x)}$;}
