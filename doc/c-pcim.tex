@@ -705,7 +705,7 @@ where
   \frac{\beta^{\alpha}}{\Gamma(\alpha)}\frac{\Gamma(\alpha + c_s(x))}{(\beta + d_s(x))^{\alpha + c_s(x)}}
 \end{equation*}
 where the gamma function, $\Gamma(\cdot)$, is an extension of the factorial
-function to real and complex numbers
+function, with its argument shifted down by 1, to real and complex numbers
 (it is not defined on the negative integers):
 \begin{align*}
   \Gamma(n) & = (n-1)!,\ n\in\mathbb{Z}^+ \\
@@ -722,14 +722,15 @@ function to real and complex numbers
 \KwOut{$S=(\Sigma,\sigma(\cdot,\cdot,\cdot))$}
 \SetKwFunction{Gain}{Gain}
 \SetKwFunction{AddTreeNode}{AddTreeNode}
-\SetKwFunction{DecisionTreeLearning}{DecisionTreeLearning}
-\Initialization{$\Sigma=\{s_0\},\sigma(l,t,y)=s_0$}
+\SetKwFunction{BayesianDecisionTreeLearning}{BayesianDecisionTreeLearning}
 \SetKw{Return}{return}
 \Begin{
-  $S \longleftarrow \DecisionTreeLearning(\mathcal{B},X,\Gain,\alpha,\beta,\kappa))$
+  $S \longleftarrow
+  \BayesianDecisionTreeLearning(\mathcal{B},X,\Gain,\alpha,\beta,\kappa))$
 }
 \SetKwProg{Def}{def}{:}{}
-\Def{$DecisionTreeLearning(\mathcal{B},X,\Gain,\alpha,\beta,\kappa)$}{
+\Def{$BayesianDecisionTreeLearning(\mathcal{B},X,\Gain,\alpha,\beta,\kappa)$}{
+  \Initialization{$\Sigma=\{s_0\},\sigma(l,t,y)=s_0$}
   \Repeat{$\Gain(S\to S')\leq1$}
   {$S' \longleftarrow \AddTreeNode(S)$;}
   \Return{$S$}
