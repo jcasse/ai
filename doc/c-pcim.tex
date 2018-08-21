@@ -11,6 +11,11 @@
 \usepackage[breaklinks]{hyperref}
 \def\UrlBreaks{\do\/\do-}
 
+\usepackage[ruled,lined]{algorithm2e}
+
+\newcommand{\argmin}[1]{\underset{#1}{\operatorname{argmin}}\ }
+\newcommand{\argmax}[1]{\underset{#1}{\operatorname{argmax}}\ }
+
 \theoremstyle{plain}
 \newtheorem*{theorem}{Theorem}
 \newtheorem*{lemma}{Lemma}
@@ -521,7 +526,7 @@ $i$th event and $l_i$ is its label, drawn from a finite label set $\mathcal{L}$.
 \begin{itemize}
   \item $t_0 = 0$
   \item $h_i = h(t_{i-1},y)$ is the history at time $t_i$
-  \item $t(y) = \mathrm{max}(\{t:(t,l) \in y\})$ is the end time of event
+  \item $t(y) = \max(\{t:(t,l) \in y\})$ is the end time of event
     sequence $y$ such that $t(h_i) = t_{i-1}$
 \end{itemize}
 \end{definition}
@@ -703,6 +708,49 @@ where
 \begin{equation*}
   \Gamma(n) = (n-1)!
 \end{equation*}
+
+\begin{algorithm}[H]
+%\TitleOfAlgo{Structure Learning}
+\DontPrintSemicolon
+\KwIn{$\mathcal{B}=\{f_i(l,t,y)\}_{i=k},X = \{(T_i,l_i)\}_{i=1}^n$}
+\SetKwInOut{Parameters}{Parameters}
+\Parameters{$\alpha,\beta,\kappa$}
+\SetKwInOut{Initialization}{Initialization}
+\KwOut{$S=(\Sigma,\sigma(\cdot,\cdot,\cdot))$}
+\SetKwFunction{Gain}{Gain}
+\SetKwFunction{AddTreeNode}{AddTreeNode}
+\SetKwFunction{DecisionTreeLearning}{DecisionTreeLearning}
+\Initialization{$\Sigma=\{s_0\},\sigma(l,t,y)=s_0$}
+\SetKw{Return}{return}
+\Begin{
+  $S \longleftarrow \DecisionTreeLearning(\mathcal{B},X,\Gain,\alpha,\beta,\kappa))$
+}
+\SetKwProg{Def}{def}{:}{}
+\Def{$DecisionTreeLearning(\mathcal{B},X,\Gain,\alpha,\beta,\kappa)$}{
+  \Repeat{$\Gain(S\to S')\leq1$}
+  {$S' \longleftarrow \AddTreeNode(S)$;}
+  \Return{$S$}
+}
+\caption{Structure Learning}
+\label{algo:structure}
+\end{algorithm}
+
+\begin{algorithm}[H]
+%\TitleOfAlgo{Parameter Learning}
+\DontPrintSemicolon
+\KwIn{$S=(\Sigma,\sigma(\cdot,\cdot,\cdot))$}
+\SetKwInOut{Parameters}{Parameters}
+\Parameters{$\alpha,\beta$}
+\KwOut{$\Theta=\{\lambda_s\}_{s\in\Sigma}$}
+\SetKw{Return}{return}
+\SetKwFor{FOR}{for}{do}{endFor}
+\Begin{
+  \FOR{$s\in\Sigma$}
+  {$\lambda_s=\frac{\alpha+c_s(x)}{\beta+d_s(x)}$;}
+}
+\caption{Parameter Learning}
+\label{algo:parameters}
+\end{algorithm}
 
 \bibliography{bibliography}
 \bibliographystyle{plainnat}
